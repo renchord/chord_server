@@ -323,6 +323,23 @@ public:
     static typename ConfigVar<T>::ptr Lookup(const std::string& name,  //声明两个函数
             const T& default_value, const std::string& description = ""){
             
+            auto it = s_datas.find(name);
+            if(it != s_datas.end())
+            {
+                auto tmp = std::dynamic_pointer_cast<ConfigVar<T>> (it->second);
+                if(tmp != nullptr)
+                {
+                    CHORD_LOG_INFO(CHORD_LOG_ROOT()) << "Lookup name = " << name << "exists";
+                    return tmp;
+                }
+                else
+                {
+                    CHORD_LOG_ERROR(CHORD_LOG_ROOT()) << "Lookup name = " << name << "exists but type not"
+                                    << typeid(T) <<endl;
+                    return nullptr;
+                }
+            }
+
             auto temp = Lookup<T>(name) ;
             if(temp != nullptr)
             {
