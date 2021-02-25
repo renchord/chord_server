@@ -36,6 +36,7 @@ public:
 
     virtual std::string toString() = 0; //纯虚函数
     virtual bool fromString(const std::string& val) = 0;
+    virtual std::string getTypeName() const = 0; //如果派生类特有 无法访问
 protected:
     std::string m_name;
     std::string m_description;
@@ -293,6 +294,7 @@ public:
         {
             CHORD_LOG_ERROR(CHORD_LOG_ROOT()) << "ConfigVar::toString exception" 
                 << e.what() << "convert: " << typeid(m_val).name() << "to string";
+                
         }
         return "";
     }
@@ -303,14 +305,15 @@ public:
         } catch (std::exception& e)
         {
             CHORD_LOG_ERROR(CHORD_LOG_ROOT()) << "ConfigVar::toString exception" 
-                << e.what() << "convert: " << typeid(m_val).name();
+                << e.what() << "convert: " << typeid(m_val).name()
+                << " - " << val;
         }
         return false;
     }
     
     const T getValue() const {return m_val; }
     void setValue(const T& val) {m_val = val; } 
-    std::string getTypeName() const {return typeid(T).name(); }
+    std::string getTypeName() const override {return typeid(T).name(); }
 private:
     T m_val;
 };
@@ -336,7 +339,7 @@ public:
                 else
                 {
                     CHORD_LOG_ERROR(CHORD_LOG_ROOT()) << "Lookup name = " << name << "exists but type not"
-                                    << typeid(T).name() << "real_type = " << it->second->getName() <<std::endl;
+                                    << typeid(T).name() << "real_type = " << it->second->getTypeName() << " " << it->second->toString();
                     return nullptr;
                 }
             }

@@ -38,6 +38,18 @@ system:
       str_int_umap:
            k1 : 44
            k2 : 55
-           
-           
-           
+
+class:
+     person:
+          name: Rika
+          age: 27
+          sex: false
+     map:
+          rikayoung1:
+               name: rikayoung1
+               age: 18
+               sex: false
+          rikayoung2:
+               name: rikayoung1
+               age: 20
+               sex: false
