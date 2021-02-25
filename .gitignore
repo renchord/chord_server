@@ -1,0 +1,7 @@
+tags
+*.o
+*.sub
+*.guess
+ltmain.sh
+*.la
+*.a
