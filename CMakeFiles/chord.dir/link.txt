@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC  -rdynamic -O0 -fPIC -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -Wno-deprecated-declarations  -shared -Wl,-soname,libchord.so -o lib/libchord.so CMakeFiles/chord.dir/chord/logger.cpp.o CMakeFiles/chord.dir/chord/util.cpp.o CMakeFiles/chord.dir/chord/config.cpp.o  -L/usr/local/lib 
