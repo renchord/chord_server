@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/chord/chordPj
+CMAKE_SOURCE_DIR = /home/chord/workspace/chord_server/chord_server
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/chord/chordPj
+CMAKE_BINARY_DIR = /home/chord/workspace/chord_server/chord_server
 
 #=============================================================================
 # Target rules for target CMakeFiles/chord.dir
@@ -69,7 +69,7 @@ CMAKE_BINARY_DIR = /home/chord/chordPj
 CMakeFiles/chord.dir/all:
 	$(MAKE) -f CMakeFiles/chord.dir/build.make CMakeFiles/chord.dir/depend
 	$(MAKE) -f CMakeFiles/chord.dir/build.make CMakeFiles/chord.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chord/chordPj/CMakeFiles --progress-num=1,2,3,4 "Built target chord"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chord/workspace/chord_server/chord_server/CMakeFiles --progress-num=1,2,3,4 "Built target chord"
 .PHONY : CMakeFiles/chord.dir/all
 
 # Include target in all.
@@ -79,9 +79,9 @@ all: CMakeFiles/chord.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/chord.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chord/chordPj/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chord/workspace/chord_server/chord_server/CMakeFiles 4
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/chord.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chord/chordPj/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chord/workspace/chord_server/chord_server/CMakeFiles 0
 .PHONY : CMakeFiles/chord.dir/rule
 
 # Convenience name for target.
@@ -106,7 +106,7 @@ clean: CMakeFiles/chord.dir/clean
 CMakeFiles/test_config.dir/all: CMakeFiles/chord.dir/all
 	$(MAKE) -f CMakeFiles/test_config.dir/build.make CMakeFiles/test_config.dir/depend
 	$(MAKE) -f CMakeFiles/test_config.dir/build.make CMakeFiles/test_config.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chord/chordPj/CMakeFiles --progress-num=7,8 "Built target test_config"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chord/workspace/chord_server/chord_server/CMakeFiles --progress-num=7,8 "Built target test_config"
 .PHONY : CMakeFiles/test_config.dir/all
 
 # Include target in all.
@@ -116,9 +116,9 @@ all: CMakeFiles/test_config.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/test_config.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chord/chordPj/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chord/workspace/chord_server/chord_server/CMakeFiles 6
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/test_config.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chord/chordPj/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chord/workspace/chord_server/chord_server/CMakeFiles 0
 .PHONY : CMakeFiles/test_config.dir/rule
 
 # Convenience name for target.
@@ -143,7 +143,7 @@ clean: CMakeFiles/test_config.dir/clean
 CMakeFiles/test01.dir/all: CMakeFiles/chord.dir/all
 	$(MAKE) -f CMakeFiles/test01.dir/build.make CMakeFiles/test01.dir/depend
 	$(MAKE) -f CMakeFiles/test01.dir/build.make CMakeFiles/test01.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chord/chordPj/CMakeFiles --progress-num=5,6 "Built target test01"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/chord/workspace/chord_server/chord_server/CMakeFiles --progress-num=5,6 "Built target test01"
 .PHONY : CMakeFiles/test01.dir/all
 
 # Include target in all.
@@ -153,9 +153,9 @@ all: CMakeFiles/test01.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/test01.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chord/chordPj/CMakeFiles 6
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chord/workspace/chord_server/chord_server/CMakeFiles 6
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/test01.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chord/chordPj/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chord/workspace/chord_server/chord_server/CMakeFiles 0
 .PHONY : CMakeFiles/test01.dir/rule
 
 # Convenience name for target.

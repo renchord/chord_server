@@ -5,3 +5,15 @@ tags
 ltmain.sh
 *.la
 *.a
+bin/*
+config.h.in
+config.log
+config.status
+configure
+config.h.in~
+install-sh
+libtool
+Makefile
+Makefile.in
+missing
+stamp-h1

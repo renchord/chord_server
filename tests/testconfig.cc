@@ -3,7 +3,10 @@
 #include "yaml-cpp/yaml.h"
 
 chord::ConfigVar<int>::ptr g_int_value_config = 
-    chord::Config::Lookup("system.port", (int)8080, "system port"); //构建了映射
+chord::Config::Lookup("system.port", (int)8080, "system port"); //构建了映射
+
+chord::ConfigVar<float>::ptr g_int_valuex_config = 
+chord::Config::Lookup("system.port", (float)8080, "system port"); //构建了映射
 
 chord::ConfigVar<float>::ptr g_float_value_config = 
 chord::Config::Lookup("system.value", (float)10.2f, "system value"); //构建了映射
@@ -96,6 +99,7 @@ void test_config() {
 
 
     CHORD_LOG_INFO(CHORD_LOG_ROOT()) <<"after : " << g_int_value_config->getValue();
+    CHORD_LOG_INFO(CHORD_LOG_ROOT()) <<"after : " << g_int_valuex_config->getValue();
     CHORD_LOG_INFO(CHORD_LOG_ROOT()) <<"after : " << g_float_value_config->toString();
     XX(g_int_vec_value_config, int_vec, after);
     XX(g_int_list_value_config, list, after);

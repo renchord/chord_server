@@ -310,6 +310,7 @@ public:
     
     const T getValue() const {return m_val; }
     void setValue(const T& val) {m_val = val; } 
+    std::string getTypeName() const {return typeid(T).name(); }
 private:
     T m_val;
 };
@@ -335,7 +336,7 @@ public:
                 else
                 {
                     CHORD_LOG_ERROR(CHORD_LOG_ROOT()) << "Lookup name = " << name << "exists but type not"
-                                    << typeid(T) <<endl;
+                                    << typeid(T).name() << "real_type = " << it->second->getName() <<std::endl;
                     return nullptr;
                 }
             }

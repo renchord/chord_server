@@ -1,5 +1,5 @@
-/home/chord/chordPj/CMakeFiles/edit_cache.dir
-/home/chord/chordPj/CMakeFiles/rebuild_cache.dir
-/home/chord/chordPj/CMakeFiles/chord.dir
-/home/chord/chordPj/CMakeFiles/test_config.dir
-/home/chord/chordPj/CMakeFiles/test01.dir
+/home/chord/workspace/chord_server/chord_server/CMakeFiles/edit_cache.dir
+/home/chord/workspace/chord_server/chord_server/CMakeFiles/rebuild_cache.dir
+/home/chord/workspace/chord_server/chord_server/CMakeFiles/chord.dir
+/home/chord/workspace/chord_server/chord_server/CMakeFiles/test_config.dir
+/home/chord/workspace/chord_server/chord_server/CMakeFiles/test01.dir
