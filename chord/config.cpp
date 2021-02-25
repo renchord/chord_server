@@ -28,6 +28,9 @@ static void ListAllMember(const std::string& prefix,
     }
 }
 
+
+
+
 void Config::LoadFromYaml(const YAML::Node& root){
     std::list<std::pair<std::string, const YAML::Node>> all_nodes;
     ListAllMember("", root, all_nodes); //该函数完成对YAML node中所有的对象的存储,每个pair key存string,带., val值存map的结果
