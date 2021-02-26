@@ -125,6 +125,11 @@ public:
            << "]";
         return ss.str();
     }
+    bool operator==(const Person& rhs) const //这个fun的const非常重要 因为都是const成员去调用 ==方法
+    //增加operator== :为了解决 重配置时 person类作为map的对比对象 必须要重载 == 操作符
+    {
+        return this->m_age == rhs.m_age && this->m_name == rhs.m_name && this->m_sex == rhs.m_sex;
+    }
 private:
     
 };
@@ -183,6 +188,12 @@ void test_calss(){
     }\
     CHORD_LOG_INFO(CHORD_LOG_ROOT()) << prefix <<": size = " << m.size();\
 } 
+
+    g_person->addListener(10, [](const Person& old_value, const Person& new_value){
+        CHORD_LOG_INFO(CHORD_LOG_ROOT()) << "old_value = " << old_value.toString() << " - " <<
+        "new_value = " << new_value.toString();
+    });
+
     XX_PM(g_person_map, "class.map before");
     YAML::Node root = YAML::LoadFile("/home/chord/workspace/chord_server/bin/conf/log.yml"); //Load了Yaml文件的全集
     chord::Config::LoadFromYaml(root); //
