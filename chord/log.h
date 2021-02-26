@@ -12,36 +12,10 @@
 #include "util.h"
 #include "singleton.h"
 
-#define CHORD_LOG_LEVEL(logger, level) \
-    if(logger->getLevel() <= level) \
-        chord::LogEventWrap(chord::LogEvent::ptr(new chord::LogEvent(logger,\
-        level, __FILE__, __LINE__, 0, chord::GetThreadId(), chord::GetFiberId(), \
-        time(0)))).getSS()
-
-#define CHORD_LOG_DEBUG(logger)   CHORD_LOG_LEVEL(logger,   chord::LogLevel::DEBUG)
-#define CHORD_LOG_INFO(logger)    CHORD_LOG_LEVEL(logger,   chord::LogLevel::INFO)
-#define CHORD_LOG_WARN(logger)    CHORD_LOG_LEVEL(logger,   chord::LogLevel::WARN)
-#define CHORD_LOG_ERROR(logger)   CHORD_LOG_LEVEL(logger,   chord::LogLevel::ERROR)
-#define CHORD_LOG_FATAL(logger)   CHORD_LOG_LEVEL(logger,   chord::LogLevel::FATAL)
-
-#define CHORD_LOG_FMT_LEVEL(logger, level, fmt, ...) \
-    if(logger->getLevel() <= level) \
-        chord::LogEventWrap(chord::LogEvent::ptr(new chord::LogEvent(logger, \
-        level, __FILE__, __LINE__, 0, chord::GetThreadId(), chord::GetFiberId(), \
-        time(0)))).getEvent()->format(fmt, __VA_ARGS__)
-
-#define CHORD_LOG_FMT_DEBUG(logger, fmt, ...)    CHORD_LOG_FMT_LEVEL(logger, chord::LogLevel::DEBUG, fmt, __VA_ARGS__)
-#define CHORD_LOG_FMT_INFO(logger, fmt, ...)    CHORD_LOG_FMT_LEVEL(logger, chord::LogLevel::INFO, fmt, __VA_ARGS__)
-#define CHORD_LOG_FMT_WARN(logger, fmt, ...)    CHORD_LOG_FMT_LEVEL(logger, chord::LogLevel::WARN, fmt, __VA_ARGS__)
-#define CHORD_LOG_FMT_ERROR(logger, fmt, ...)    CHORD_LOG_FMT_LEVEL(logger, chord::LogLevel::ERROR, fmt, __VA_ARGS__)
-#define CHORD_LOG_FMT_FATAL(logger, fmt, ...)    CHORD_LOG_FMT_LEVEL(logger, chord::LogLevel::FATAL, fmt, __VA_ARGS__)
-
-#define CHORD_LOG_ROOT()   chord::LoggerMgr::GetInstance()->getRoot()
-
-
 namespace chord{
 
 class Logger;
+class LoggerManager;
 
 //日志级别
 class LogLevel{
@@ -55,7 +29,7 @@ public:
         ERROR  = 4,
         FATAL  = 5
     };
-
+    static LogLevel::Level FromString(const std::string& str);
     static const char* ToString(LogLevel::Level level);
 };
 
@@ -129,12 +103,15 @@ public:
         virtual ~FormatItem() {}
         virtual void format(std::ostream& os, std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event) = 0;
     };
+    bool isError() const {return m_error; } 
 private:
     void init();
+   
 
 private:
     std::string m_pattern;
     std::vector<FormatItem::ptr> m_items;
+    bool m_error = false;
 };
    
 //日志输出器
@@ -160,6 +137,7 @@ private:
 
 //日志器
 class Logger :public std::enable_shared_from_this<Logger> {
+friend class LoggerManager;
 public:
     typedef std::shared_ptr<Logger> ptr;
 
@@ -175,16 +153,21 @@ public:
 
     void addAppender(LogAppender::ptr appender);
     void delAppender(LogAppender::ptr appender);
+    void clearAppenders();
     LogLevel::Level getLevel() const { return m_level;}
     void setLevel(LogLevel::Level val) { m_level = val; }
 
     const std::string& getName() const {return m_name; }
+    void setFormatter(LogFormatter::ptr val);
+    void setFormatter(const std::string& val);
+    LogFormatter::ptr getFormatter() {return m_formatter;}
 
 private:
     std::string m_name;                         //日志名称
     LogLevel::Level m_level;                    //日志级别
     LogFormatter::ptr m_formatter;              //formatter集合
     std::list<LogAppender::ptr> m_appenders;    //appener集合
+    Logger::ptr m_root;// 
 };
 
 

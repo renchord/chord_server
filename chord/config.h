@@ -18,6 +18,34 @@
 #include <functional>
 
 
+
+#define CHORD_LOG_LEVEL(logger, level) \
+    if(logger->getLevel() <= level) \
+        chord::LogEventWrap(chord::LogEvent::ptr(new chord::LogEvent(logger,\
+        level, __FILE__, __LINE__, 0, chord::GetThreadId(), chord::GetFiberId(), \
+        time(0)))).getSS()
+
+#define CHORD_LOG_DEBUG(logger)   CHORD_LOG_LEVEL(logger,   chord::LogLevel::DEBUG)
+#define CHORD_LOG_INFO(logger)    CHORD_LOG_LEVEL(logger,   chord::LogLevel::INFO)
+#define CHORD_LOG_WARN(logger)    CHORD_LOG_LEVEL(logger,   chord::LogLevel::WARN)
+#define CHORD_LOG_ERROR(logger)   CHORD_LOG_LEVEL(logger,   chord::LogLevel::ERROR)
+#define CHORD_LOG_FATAL(logger)   CHORD_LOG_LEVEL(logger,   chord::LogLevel::FATAL)
+
+#define CHORD_LOG_FMT_LEVEL(logger, level, fmt, ...) \
+    if(logger->getLevel() <= level) \
+        chord::LogEventWrap(chord::LogEvent::ptr(new chord::LogEvent(logger, \
+        level, __FILE__, __LINE__, 0, chord::GetThreadId(), chord::GetFiberId(), \
+        time(0)))).getEvent()->format(fmt, __VA_ARGS__)
+
+#define CHORD_LOG_FMT_DEBUG(logger, fmt, ...)    CHORD_LOG_FMT_LEVEL(logger, chord::LogLevel::DEBUG, fmt, __VA_ARGS__)
+#define CHORD_LOG_FMT_INFO(logger, fmt, ...)    CHORD_LOG_FMT_LEVEL(logger, chord::LogLevel::INFO, fmt, __VA_ARGS__)
+#define CHORD_LOG_FMT_WARN(logger, fmt, ...)    CHORD_LOG_FMT_LEVEL(logger, chord::LogLevel::WARN, fmt, __VA_ARGS__)
+#define CHORD_LOG_FMT_ERROR(logger, fmt, ...)    CHORD_LOG_FMT_LEVEL(logger, chord::LogLevel::ERROR, fmt, __VA_ARGS__)
+#define CHORD_LOG_FMT_FATAL(logger, fmt, ...)    CHORD_LOG_FMT_LEVEL(logger, chord::LogLevel::FATAL, fmt, __VA_ARGS__)
+
+#define CHORD_LOG_ROOT()   chord::LoggerMgr::GetInstance()->getRoot()             
+#define CHORD_LOG_NAME(name) chord::LoggerMgr::GetInstance()->getLogger(name)    //获取logger的方式 by name
+
 namespace chord
 {
 
@@ -367,8 +395,8 @@ public:
     static typename ConfigVar<T>::ptr Lookup(const std::string& name,  //声明两个函数
             const T& default_value, const std::string& description = ""){
             
-            auto it = s_datas.find(name);
-            if(it != s_datas.end())
+            auto it = Config::GetDatas().find(name);
+            if(it != Config::GetDatas().end())
             {
                 auto tmp = std::dynamic_pointer_cast<ConfigVar<T>> (it->second);
                 if(tmp != nullptr)
@@ -397,14 +425,14 @@ public:
             }
 
             typename ConfigVar<T>::ptr v(new ConfigVar<T>(name, default_value, description));
-            s_datas[name] = v; //构建映射对
+            Config::GetDatas()[name] = v; //构建映射对
             return v;
             }
 
     template<class T>
     static typename ConfigVar<T>::ptr Lookup(const std::string& name){
-        auto it = s_datas.find(name);
-        if(it == s_datas.end())
+        auto it = Config::GetDatas().find(name);
+        if(it == Config::GetDatas().end())
         {
             return nullptr;
         }
@@ -413,9 +441,12 @@ public:
 
     static void LoadFromYaml(const YAML::Node& node);
     static ConfigVarBase::ptr LookupBase(const std::string& name); //不允许返回抽象类
-private:
-    static ConfigVarMap s_datas;
-
+private: //staic方法可以是private的
+    static ConfigVarMap& GetDatas()
+    {
+        static ConfigVarMap s_datas; //用方法来返回静态变量,这样不同cpp文件可以保证s_datas初始化好了
+        return s_datas;
+    }
 };
 
 }

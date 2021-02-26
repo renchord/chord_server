@@ -58,7 +58,7 @@ void print_yaml(const YAML::Node& node, int level)
 }
 
 void test_yaml() {
-    YAML::Node root = YAML::LoadFile("/home/chord/chordPj/bin/conf/log.yml");
+    YAML::Node root = YAML::LoadFile("/home/chord/workspace/chord_server/bin/conf/test.yml");
 
     print_yaml(root, 0);
     //
@@ -94,7 +94,7 @@ void test_config() {
     XX_M(g_str_int_map_value_config, str_int_map, before);
     XX_M(g_str_int_umap_value_config, str_int_map, before);
 
-    YAML::Node root = YAML::LoadFile("/home/chord/workspace/chord_server/bin/conf/log.yml"); //Load了Yaml文件的全集
+    YAML::Node root = YAML::LoadFile("/home/chord/workspace/chord_server/bin/conf/test.yml"); //Load了Yaml文件的全集
     chord::Config::LoadFromYaml(root); //
 
 
@@ -195,7 +195,7 @@ void test_calss(){
     });
 
     XX_PM(g_person_map, "class.map before");
-    YAML::Node root = YAML::LoadFile("/home/chord/workspace/chord_server/bin/conf/log.yml"); //Load了Yaml文件的全集
+    YAML::Node root = YAML::LoadFile("/home/chord/workspace/chord_server/bin/conf/test.yml"); //Load了Yaml文件的全集
     chord::Config::LoadFromYaml(root); //
 
     CHORD_LOG_INFO(CHORD_LOG_ROOT()) << "after:" << g_person->getValue().toString() << " - " << g_person->toString();

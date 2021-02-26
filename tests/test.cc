@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../chord/log.h"
+#include "../chord/config.h"
 #include "../chord/util.h"
 
 int main(int argc, char** argv) {
