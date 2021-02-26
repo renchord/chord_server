@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/chord/workspace/chord_server/chord_server/chord/config.h
+/home/chord/workspace/chord_server/chord/config.h
 memory
 -
 sstream
@@ -16,9 +16,9 @@ boost/lexical_cast.hpp
 string
 -
 yaml-cpp/yaml.h
-/home/chord/workspace/chord_server/chord_server/chord/yaml-cpp/yaml.h
+/home/chord/workspace/chord_server/chord/yaml-cpp/yaml.h
 log.h
-/home/chord/workspace/chord_server/chord_server/chord/log.h
+/home/chord/workspace/chord_server/chord/log.h
 vector
 -
 list
@@ -32,7 +32,7 @@ unordered_map
 unordered_set
 -
 
-/home/chord/workspace/chord_server/chord_server/chord/log.h
+/home/chord/workspace/chord_server/chord/log.h
 iostream
 -
 stdint.h
@@ -50,15 +50,15 @@ vector
 map
 -
 util.h
-/home/chord/workspace/chord_server/chord_server/chord/util.h
+/home/chord/workspace/chord_server/chord/util.h
 singleton.h
-/home/chord/workspace/chord_server/chord_server/chord/singleton.h
+/home/chord/workspace/chord_server/chord/singleton.h
 
-/home/chord/workspace/chord_server/chord_server/chord/singleton.h
+/home/chord/workspace/chord_server/chord/singleton.h
 memory
 -
 
-/home/chord/workspace/chord_server/chord_server/chord/util.h
+/home/chord/workspace/chord_server/chord/util.h
 pthread.h
 -
 sys/types.h
@@ -68,11 +68,11 @@ sys/syscall.h
 unistd.h
 -
 
-/home/chord/workspace/chord_server/chord_server/tests/testconfig.cc
+/home/chord/workspace/chord_server/tests/testconfig.cc
 ../chord/log.h
-/home/chord/workspace/chord_server/chord_server/chord/log.h
+/home/chord/workspace/chord_server/chord/log.h
 ../chord/config.h
-/home/chord/workspace/chord_server/chord_server/chord/config.h
+/home/chord/workspace/chord_server/chord/config.h
 yaml-cpp/yaml.h
-/home/chord/workspace/chord_server/chord_server/tests/yaml-cpp/yaml.h
+/home/chord/workspace/chord_server/tests/yaml-cpp/yaml.h
 

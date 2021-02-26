@@ -6,13 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/home/chord/workspace/chord_server/chord_server/chord/config.cpp
+/home/chord/workspace/chord_server/chord/config.cpp
 list
 -
 config.h
-/home/chord/workspace/chord_server/chord_server/chord/config.h
+/home/chord/workspace/chord_server/chord/config.h
 
-/home/chord/workspace/chord_server/chord_server/chord/config.h
+/home/chord/workspace/chord_server/chord/config.h
 memory
 -
 sstream
@@ -22,9 +22,9 @@ boost/lexical_cast.hpp
 string
 -
 yaml-cpp/yaml.h
-/home/chord/workspace/chord_server/chord_server/chord/yaml-cpp/yaml.h
+/home/chord/workspace/chord_server/chord/yaml-cpp/yaml.h
 log.h
-/home/chord/workspace/chord_server/chord_server/chord/log.h
+/home/chord/workspace/chord_server/chord/log.h
 vector
 -
 list
@@ -38,7 +38,7 @@ unordered_map
 unordered_set
 -
 
-/home/chord/workspace/chord_server/chord_server/chord/log.h
+/home/chord/workspace/chord_server/chord/log.h
 iostream
 -
 stdint.h
@@ -56,11 +56,11 @@ vector
 map
 -
 util.h
-/home/chord/workspace/chord_server/chord_server/chord/util.h
+/home/chord/workspace/chord_server/chord/util.h
 singleton.h
-/home/chord/workspace/chord_server/chord_server/chord/singleton.h
+/home/chord/workspace/chord_server/chord/singleton.h
 
-/home/chord/workspace/chord_server/chord_server/chord/logger.cpp
+/home/chord/workspace/chord_server/chord/logger.cpp
 functional
 -
 map
@@ -74,19 +74,19 @@ string.h
 stdarg.h
 -
 log.h
-/home/chord/workspace/chord_server/chord_server/chord/log.h
+/home/chord/workspace/chord_server/chord/log.h
 singleton.h
-/home/chord/workspace/chord_server/chord_server/chord/singleton.h
+/home/chord/workspace/chord_server/chord/singleton.h
 
-/home/chord/workspace/chord_server/chord_server/chord/singleton.h
+/home/chord/workspace/chord_server/chord/singleton.h
 memory
 -
 
-/home/chord/workspace/chord_server/chord_server/chord/util.cpp
+/home/chord/workspace/chord_server/chord/util.cpp
 util.h
-/home/chord/workspace/chord_server/chord_server/chord/util.h
+/home/chord/workspace/chord_server/chord/util.h
 
-/home/chord/workspace/chord_server/chord_server/chord/util.h
+/home/chord/workspace/chord_server/chord/util.h
 pthread.h
 -
 sys/types.h

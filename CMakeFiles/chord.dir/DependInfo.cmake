@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/chord/workspace/chord_server/chord_server/chord/config.cpp" "/home/chord/workspace/chord_server/chord_server/CMakeFiles/chord.dir/chord/config.cpp.o"
-  "/home/chord/workspace/chord_server/chord_server/chord/logger.cpp" "/home/chord/workspace/chord_server/chord_server/CMakeFiles/chord.dir/chord/logger.cpp.o"
-  "/home/chord/workspace/chord_server/chord_server/chord/util.cpp" "/home/chord/workspace/chord_server/chord_server/CMakeFiles/chord.dir/chord/util.cpp.o"
+  "/home/chord/workspace/chord_server/chord/config.cpp" "/home/chord/workspace/chord_server/CMakeFiles/chord.dir/chord/config.cpp.o"
+  "/home/chord/workspace/chord_server/chord/logger.cpp" "/home/chord/workspace/chord_server/CMakeFiles/chord.dir/chord/logger.cpp.o"
+  "/home/chord/workspace/chord_server/chord/util.cpp" "/home/chord/workspace/chord_server/CMakeFiles/chord.dir/chord/util.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

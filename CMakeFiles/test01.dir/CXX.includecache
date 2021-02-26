@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/chord/workspace/chord_server/chord_server/chord/log.h
+/home/chord/workspace/chord_server/chord/log.h
 iostream
 -
 stdint.h
@@ -24,15 +24,15 @@ vector
 map
 -
 util.h
-/home/chord/workspace/chord_server/chord_server/chord/util.h
+/home/chord/workspace/chord_server/chord/util.h
 singleton.h
-/home/chord/workspace/chord_server/chord_server/chord/singleton.h
+/home/chord/workspace/chord_server/chord/singleton.h
 
-/home/chord/workspace/chord_server/chord_server/chord/singleton.h
+/home/chord/workspace/chord_server/chord/singleton.h
 memory
 -
 
-/home/chord/workspace/chord_server/chord_server/chord/util.h
+/home/chord/workspace/chord_server/chord/util.h
 pthread.h
 -
 sys/types.h
@@ -42,11 +42,11 @@ sys/syscall.h
 unistd.h
 -
 
-/home/chord/workspace/chord_server/chord_server/tests/test.cc
+/home/chord/workspace/chord_server/tests/test.cc
 iostream
 -
 ../chord/log.h
-/home/chord/workspace/chord_server/chord_server/chord/log.h
+/home/chord/workspace/chord_server/chord/log.h
 ../chord/util.h
-/home/chord/workspace/chord_server/chord_server/chord/util.h
+/home/chord/workspace/chord_server/chord/util.h
 
