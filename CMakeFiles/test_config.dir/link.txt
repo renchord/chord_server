@@ -1,1 +1,0 @@
-/usr/bin/c++   -rdynamic -O0 -fPIC -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -Wno-deprecated-declarations  -rdynamic CMakeFiles/test_config.dir/tests/testconfig.cc.o  -o bin/test_config  -L/usr/local/lib -Wl,-rpath,/usr/local/lib:/home/chord/workspace/chord_server/lib lib/libchord.so /usr/local/lib/libyaml-cpp.a 
