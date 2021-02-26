@@ -29,3 +29,5 @@ stamp-h1
 depcomp
 *.xcodeproj
 CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
