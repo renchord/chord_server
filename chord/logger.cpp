@@ -12,9 +12,9 @@ namespace chord{
 
 
 LogLevel::Level LogLevel::FromString(const std::string& str){
-#define XX(name) \   
+#define XX(name) \
     if(str == #name) \
-    {\
+    { \
         return LogLevel::name;  \
     }
     
@@ -640,7 +640,31 @@ public:
         YAML::Node node;
         for(auto& i : v)
         {
-            node.push_back(YAML::Load(LexicalCast<T, std::string>()(i))); //变成一个YAML节点再pushback
+            YAML::Node n;
+            n["name"] = i.name;
+            n["level"] = LogLevel::ToString(i.level);
+
+            if(!i.formatter.empty())
+            {
+                n["formatter"] = i.formatter;
+            }
+
+            for(auto& a : i.appenders)
+            {
+                YAML::Node na;
+                if(a.type == 1) //file 
+                {
+                    na["type"] = "FileLogAppender";
+                    na["file"] = a.file;
+                }
+                else if (a.type == 2)
+                {
+                    na["type"] = "StdoutLogAppender";
+                }
+                na["level"] = LogLevel::ToString(a.level);
+                n["appenders"].push_back(na);
+            }
+            node.push_back(n);
         }
         std::stringstream ss;
         ss << node;
@@ -650,14 +674,14 @@ public:
 };
 
 
-chord::ConfigVar<std::set<LogDefine>> g_log_defines = 
+chord::ConfigVar<std::set<LogDefine>>::ptr g_log_defines = 
     chord::Config::Lookup("logs", std::set<LogDefine>(), "logs config"); //偏特化如何考虑?
 
 
 //注册事件
 struct LogIniter {
     LogIniter() {
-        g_log_defines.addListener(0xF1E231, [](const std::set<LogDefine>& old_value, const std::set<LogDefine>& new_value) 
+        g_log_defines->addListener(0xF1E231, [](const std::set<LogDefine>& old_value, const std::set<LogDefine>& new_value) 
         {
 
             CHORD_LOG_INFO(CHORD_LOG_ROOT()) << "on_logger_conf_changed";
