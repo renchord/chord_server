@@ -2,6 +2,7 @@
 #include "../chord/config.h"
 #include "yaml-cpp/yaml.h"
 
+
 chord::ConfigVar<int>::ptr g_int_value_config = 
 chord::Config::Lookup("system.port", (int)8080, "system port"); //构建了映射
 
@@ -209,7 +210,9 @@ void test_log()
     std::cout << chord::LoggerMgr::GetInstance()->toYamlString() << std::endl;
 
     YAML::Node root = YAML::LoadFile("/home/chord/workspace/chord_server/bin/conf/log.yml"); //Load了Yaml文件的全集
+    //auto temp = chord::Config::GetDatas();
     chord::Config::LoadFromYaml(root);
+    //temp = chord::Config::GetDatas();
     std::cout << "===========" << std::endl;
     std::cout << chord::LoggerMgr::GetInstance()->toYamlString() << std::endl;
 }

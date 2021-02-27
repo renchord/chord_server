@@ -336,7 +336,7 @@ public:
         } catch (std::exception& e)
         {
             CHORD_LOG_ERROR(CHORD_LOG_ROOT()) << "ConfigVar::toString exception" 
-                << e.what() << "convert: " << typeid(m_val).name()
+                << e.what() << "convert: " << typeid(val).name()
                 << " - " << val;
         }
         return false;
@@ -395,8 +395,8 @@ public:
     static typename ConfigVar<T>::ptr Lookup(const std::string& name,  //声明两个函数
             const T& default_value, const std::string& description = ""){
             
-            auto it = Config::GetDatas().find(name);
-            if(it != Config::GetDatas().end())
+            auto it = GetDatas().find(name);
+            if(it != GetDatas().end())
             {
                 auto tmp = std::dynamic_pointer_cast<ConfigVar<T>> (it->second);
                 if(tmp != nullptr)
@@ -425,14 +425,14 @@ public:
             }
 
             typename ConfigVar<T>::ptr v(new ConfigVar<T>(name, default_value, description));
-            Config::GetDatas()[name] = v; //构建映射对
+            GetDatas()[name] = v; //构建映射对
             return v;
             }
 
     template<class T>
     static typename ConfigVar<T>::ptr Lookup(const std::string& name){
-        auto it = Config::GetDatas().find(name);
-        if(it == Config::GetDatas().end())
+        auto it = GetDatas().find(name);
+        if(it == GetDatas().end())
         {
             return nullptr;
         }
@@ -441,7 +441,7 @@ public:
 
     static void LoadFromYaml(const YAML::Node& node);
     static ConfigVarBase::ptr LookupBase(const std::string& name); //不允许返回抽象类
-private: //staic方法可以是private的
+//private: //staic方法可以是private的
     static ConfigVarMap& GetDatas()
     {
         static ConfigVarMap s_datas; //用方法来返回静态变量,这样不同cpp文件可以保证s_datas初始化好了

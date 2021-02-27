@@ -4,12 +4,12 @@ logs:
       formatter: '%d%T%m%n'
       appender:
           - type: FileLogAppender
-            path: log.txt
+            file: log.txt
           - type: StdoutLogAppender
     - name: system
       level: debug
       formatter: '%d%T%m%n'
       appender:
           - type: FileLogAppender
-            path: log.txt
+            file: log.txt
           - type: StdoutLogAppender

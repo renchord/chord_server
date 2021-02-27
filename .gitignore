@@ -1,10 +1,12 @@
 tags
 *.o
+*.so
 *.sub
 *.guess
 ltmain.sh
 *.la
 *.a
+*.elf
 .deps
 .dirstamp
 .libs
@@ -32,6 +34,5 @@ CMakeFiles
 CMakeCache.txt
 cmake_install.cmake
 Makefile.txt
-bin
 lib/:
 lib

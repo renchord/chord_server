@@ -63,7 +63,7 @@ void Config::LoadFromYaml(const YAML::Node& root){
 
 ConfigVarBase::ptr Config::LookupBase(const std::string& name)
 {
-    auto it = Config::GetDatas().find(name);
-    return it == Config::GetDatas().end() ? nullptr : it->second;
+    auto it = GetDatas().find(name);
+    return it == GetDatas().end() ? nullptr : it->second;
 }
 }

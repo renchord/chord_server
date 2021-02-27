@@ -634,11 +634,11 @@ public:
                 ld.formatter = n["formatter"].as<std::string>();
             }
 
-            if(n["appenders"].IsDefined())
+            if(n["appender"].IsDefined())
             {
-                for(size_t x = 0; x < n["appenders"].size(); ++x)
+                for(size_t x = 0; x < n["appender"].size(); ++x)
                 {
-                    auto a = n["appenders"][x];
+                    auto a = n["appender"][x];
                     if(!a["type"].IsDefined())
                     {
                         std::cout << "log config error: appender is null " << a 
@@ -652,17 +652,17 @@ public:
                         lad.type = 1;
                         if(!a["file"].IsDefined())
                         {
-                            std::cout << "log config error: file is null " << a 
+                            std::cout << "log config error: file appender is null " << a 
                             << std::endl;
                             continue;
                         }
-                        lad.file = n["file"].as<std::string>();
+                        lad.file = a["file"].as<std::string>();
                         if(a["formatter"].IsDefined())
                         {
                             lad.formatter = a["formatter"].as<std::string>();
                         }
                     }
-                    else if(type == "StdOutLogAppender")
+                    else if(type == "StdoutLogAppender")
                     {
                         lad.type = 2;
                     }
