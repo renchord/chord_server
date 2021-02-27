@@ -31,5 +31,7 @@ depcomp
 CMakeFiles
 CMakeCache.txt
 cmake_install.cmake
-Makefile
-bin/.*
+Makefile.txt
+bin
+lib/:
+lib
