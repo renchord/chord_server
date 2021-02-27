@@ -745,7 +745,7 @@ struct LogIniter {
                 chord::Logger::ptr logger;
                 if(it == old_value.end()) //new logger
                 {
-                    logger.reset(new chord::Logger(i.name));
+                    logger = CHORD_LOG_NAME(i.name);
                 }
                 else  // mod
                 {
@@ -755,7 +755,7 @@ struct LogIniter {
                     }
                 }
                 logger->setLevel(i.level);
-                if(i.formatter.empty())
+                if(!i.formatter.empty())
                 {
                     logger->setFormatter(i.formatter);
                 }
