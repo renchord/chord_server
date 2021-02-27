@@ -11,8 +11,7 @@ namespace chord{
 
 static void ListAllMember(const std::string& prefix, 
                           const YAML::Node& node, 
-                          std::list<std::pair<std::string, 
-                          const YAML::Node>>& output){
+                          std::list<std::pair<std::string, const YAML::Node>>& output){
     if(prefix.find_first_not_of("abcefghijklmnopqrstuvwxyz._012345678") != std::string::npos)
     {
         CHORD_LOG_ERROR(CHORD_LOG_ROOT()) << "Config invalid name : " << prefix << " : " << node;

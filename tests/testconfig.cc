@@ -204,12 +204,22 @@ void test_calss(){
 #undef XX_PM
 }
 
+void test_log()
+{
+    std::cout << chord::LoggerMgr::GetInstance()->toYamlString() << std::endl;
+
+    YAML::Node root = YAML::LoadFile("/home/chord/workspace/chord_server/bin/conf/log.yml"); //Load了Yaml文件的全集
+    chord::Config::LoadFromYaml(root);
+    std::cout << "===========" << std::endl;
+    std::cout << chord::LoggerMgr::GetInstance()->toYamlString() << std::endl;
+}
+
 int main(int argc, char** argv)
 {
-
-
     //test_yaml();
     //test_config();
-    test_calss();
+    //test_calss();
+
+    test_log();
     return 0;
 }

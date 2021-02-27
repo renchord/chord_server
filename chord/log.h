@@ -104,6 +104,7 @@ public:
         virtual void format(std::ostream& os, std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event) = 0;
     };
     bool isError() const {return m_error; } 
+    const std::string getPattern() const { return m_pattern; }
 private:
     void init();
    
@@ -125,6 +126,7 @@ public:
     LogFormatter::ptr getFormatter() const { return m_formatter; }
     LogLevel::Level getLevel() const {return m_level;}
     void setLevel(LogLevel::Level level) {m_level = level;}
+    virtual std::string toYamlString() = 0;// 2021 2 27
 protected:
     LogFormatter::ptr m_formatter;
     LogLevel::Level m_level = LogLevel::DEBUG;
@@ -161,7 +163,7 @@ public:
     void setFormatter(LogFormatter::ptr val);
     void setFormatter(const std::string& val);
     LogFormatter::ptr getFormatter() {return m_formatter;}
-
+    std::string toYamlString();// 2021 2 27
 private:
     std::string m_name;                         //日志名称
     LogLevel::Level m_level;                    //日志级别
@@ -176,6 +178,7 @@ class StdOutLogAppender : public LogAppender{
 public:
     typedef std::shared_ptr<StdOutLogAppender> ptr;
     virtual void log(Logger::ptr logger, LogLevel::Level level, LogEvent::ptr event) override; //子类必须要实现这个方法
+    std::string toYamlString() override;// 2021 2 27
 private:
 };
 
@@ -185,7 +188,7 @@ public:
     typedef std::shared_ptr<FileLogAppender> ptr;
     FileLogAppender(const std::string &filename);
     virtual void log(Logger::ptr logger, LogLevel::Level level, LogEvent::ptr event) override; //子类必须要实现这个方法
-
+    std::string toYamlString() override;// 2021 2 27
     //重新打开 返回成功True
     bool reopen();
 
@@ -202,6 +205,7 @@ public:
     Logger::ptr getLogger(const std::string& name);
     void init();
     Logger::ptr getRoot() const {return m_root; }
+    std::string toYamlString();
 private:
     std::map<std::string, Logger::ptr> m_logger;
     Logger::ptr m_root;
