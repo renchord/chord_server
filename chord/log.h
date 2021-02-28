@@ -117,12 +117,13 @@ private:
    
 //日志输出器
 class LogAppender{
+friend class Logger;
 public:
     typedef std::shared_ptr<LogAppender> ptr;
     virtual ~LogAppender() {}
 
     virtual void log(std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event) = 0; //子类必须要实现这个方法
-    void setFormatter(LogFormatter::ptr val) { m_formatter = val; }
+    void setFormatter(LogFormatter::ptr val);
     LogFormatter::ptr getFormatter() const { return m_formatter; }
     LogLevel::Level getLevel() const {return m_level;}
     void setLevel(LogLevel::Level level) {m_level = level;}
@@ -130,6 +131,7 @@ public:
 protected:
     LogFormatter::ptr m_formatter;
     LogLevel::Level m_level = LogLevel::DEBUG;
+    bool m_has_Formatter = false;
 private:
     
 };

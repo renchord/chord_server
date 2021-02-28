@@ -12,17 +12,23 @@ namespace chord{
 
 
 LogLevel::Level LogLevel::FromString(const std::string& str){
-#define XX(name) \
-    if(str == #name) \
+#define XX(level, v) \
+    if(str == #v) \
     { \
-        return LogLevel::name;  \
+        return LogLevel::level;  \
     }
     
-    XX(DEBUG);
-    XX(INFO);
-    XX(WARN);
-    XX(ERROR);
-    XX(FATAL);
+    XX(DEBUG, debug);
+    XX(INFO , info);
+    XX(WARN, warn);
+    XX(ERROR, error);
+    XX(FATAL, fatal);
+
+    XX(DEBUG, DEBUG);
+    XX(INFO , INFO);
+    XX(WARN, WARN);
+    XX(ERROR, ERROR);
+    XX(FATAL, FATAL);
     return LogLevel::Level::UNKNOWN;
 #undef XX
 }
@@ -45,7 +51,18 @@ const char* LogLevel::ToString(LogLevel::Level level){
         return "unknown";
     }
 }
-
+void LogAppender::setFormatter(LogFormatter::ptr val)
+{
+    m_formatter = val;
+    if(m_formatter) 
+    {
+        m_has_Formatter = true;
+    }
+    else
+    {
+        m_has_Formatter = false;
+    }
+}
 
 class MessageFormatItem : public LogFormatter::FormatItem{
 public:
@@ -233,6 +250,15 @@ Logger::Logger(const std::string& name)
 void Logger::setFormatter(LogFormatter::ptr val)
 {
     m_formatter = val;
+
+    for(auto& i : m_appenders)
+    {
+        if(!i->m_has_Formatter)//如果appender没有formatter
+        //也需要更新
+        {
+            i->m_formatter = m_formatter;
+        }
+    }
 }
 
 void Logger::setFormatter(const std::string& val)
@@ -241,18 +267,20 @@ void Logger::setFormatter(const std::string& val)
     if(new_val->isError())
     {
         std::cout << "Logger setFormatter name=" << m_name 
-                  << "value=" << val << " invalid formatter" << std::endl;
-
+                  << "value=" << val << " invalid formatter" 
+                  << std::endl;
         return;
     } 
-    m_formatter.reset(new chord::LogFormatter(val));
+    setFormatter(new_val);//转而调用 formatter的方式来实现设置
 }
 
 void Logger::addAppender(LogAppender::ptr appender)
 {
     if(!appender->getFormatter())
     {
-        appender->setFormatter(m_formatter);
+        //appender->setFormatter(m_formatter);
+        appender->m_formatter = m_formatter;//logger自己添加appender时 不会走到setFormatter的流程 即这个
+        //appender还是认为自己是没有formatter的
     }
     m_appenders.push_back(appender);
 }
@@ -319,7 +347,10 @@ std::string Logger::toYamlString()
 {
     YAML::Node node;
     node["name"] = m_name;
+    if(m_level != LogLevel::UNKNOWN)
+    {
         node["level"] = LogLevel::ToString(m_level);
+    }
     if(m_formatter != nullptr) //智能指针非空
     {
         node["formatter"] = m_formatter->getPattern();
@@ -353,8 +384,11 @@ std::string FileLogAppender::toYamlString()
     YAML::Node node;
     node["type"] = "FileLogAppender";
     node["file"] = m_filename;
-    node["level"] = LogLevel::ToString(m_level);
-    if(m_formatter)
+    if(m_level != LogLevel::UNKNOWN)
+    {
+        node["level"] = LogLevel::ToString(m_level);
+    }
+    if(m_has_Formatter && m_formatter)
     {
         node["formatter"] = m_formatter->getPattern();
     }
@@ -385,8 +419,11 @@ std::string StdOutLogAppender::toYamlString()
 {
     YAML::Node node;
     node["type"] = "StdoutLogAppender";
-    node["level"] = LogLevel::ToString(m_level);
-    if(m_formatter)
+    if(m_level != LogLevel::UNKNOWN)
+    {
+        node["level"] = LogLevel::ToString(m_level);
+    }
+    if(m_has_Formatter && m_formatter) //确保有自己的fomratter
     {
         node["formatter"] = m_formatter->getPattern();
     }
@@ -609,7 +646,7 @@ struct LogDefine {
 };
 
 
-template<>//偏特化 针对
+template<>//偏特化 针对 LogDefine
 class LexicalCast <std::string, std::set<LogDefine>> {
 public:
     std::set<LogDefine> operator() (const std::string &v)
@@ -634,11 +671,11 @@ public:
                 ld.formatter = n["formatter"].as<std::string>();
             }
 
-            if(n["appender"].IsDefined())
+            if(n["appenders"].IsDefined())
             {
-                for(size_t x = 0; x < n["appender"].size(); ++x)
+                for(size_t x = 0; x < n["appenders"].size(); ++x)
                 {
-                    auto a = n["appender"][x];
+                    auto a = n["appenders"][x];
                     if(!a["type"].IsDefined())
                     {
                         std::cout << "log config error: appender is null " << a 
@@ -691,8 +728,10 @@ public:
         {
             YAML::Node n;
             n["name"] = i.name;
-            n["level"] = LogLevel::ToString(i.level);
-
+            if(i.level == LogLevel::UNKNOWN)
+            {
+                n["level"] = LogLevel::ToString(i.level);   
+            }
             if(!i.formatter.empty())
             {
                 n["formatter"] = i.formatter;
@@ -710,7 +749,11 @@ public:
                 {
                     na["type"] = "StdoutLogAppender";
                 }
-                na["level"] = LogLevel::ToString(a.level);
+                if(a.level != LogLevel::UNKNOWN)
+                {
+                    na["level"] = LogLevel::ToString(a.level);
+                }
+                
 
                 if(!a.formatter.empty())
                 {
@@ -772,6 +815,19 @@ struct LogIniter {
                         ap.reset(new StdOutLogAppender);
                     }
                     ap->setLevel(a.level);
+                    if(!a.formatter.empty())//这里是加入appenders 的formatter 必不可少 
+                    //否则无法解析yaml文件中appenders里的formatter
+                    {
+                        LogFormatter::ptr fmt(new LogFormatter(a.formatter));
+                        if(!fmt->isError())
+                        {
+                            ap->setFormatter(fmt);
+                        }
+                        else
+                        {
+                            std::cout << "log name="<< i.name << "appender type=" << a.type << "formatter" << a.formatter << "invalid" << std::endl;
+                        }
+                    }
                     logger->addAppender(ap);
                 }
             }

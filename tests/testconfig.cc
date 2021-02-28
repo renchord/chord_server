@@ -207,6 +207,8 @@ void test_calss(){
 
 void test_log()
 {
+    static chord::Logger::ptr system_log = CHORD_LOG_NAME("system");
+    CHORD_LOG_INFO(system_log) << "hello system" << std::endl;
     std::cout << chord::LoggerMgr::GetInstance()->toYamlString() << std::endl;
 
     YAML::Node root = YAML::LoadFile("/home/chord/workspace/chord_server/bin/conf/log.yml"); //Load了Yaml文件的全集
@@ -215,6 +217,12 @@ void test_log()
     //temp = chord::Config::GetDatas();
     std::cout << "===========" << std::endl;
     std::cout << chord::LoggerMgr::GetInstance()->toYamlString() << std::endl;
+    std::cout << "===========" << std::endl;
+    std::cout << root << std::endl;
+    CHORD_LOG_INFO(system_log) << "hello system" << std::endl;
+
+    system_log->setFormatter("%d - %m%n");
+     CHORD_LOG_INFO(system_log) << "hello system" << std::endl;
 }
 
 int main(int argc, char** argv)
