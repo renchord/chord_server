@@ -9,6 +9,37 @@ static thread_local std::string t_thread_name = "UNKNOW"; //当前线程的名�
 
 static chord::Logger::ptr g_logger = CHORD_LOG_NAME("system"); //获取system的g_logger
 
+
+Semaphore::Semaphore(uint32_t count)
+{
+    if(sem_init(&m_semaphore, 0, count))
+    {
+        throw std::logic_error("sem_init error");
+    }
+}
+Semaphore::~Semaphore()
+{
+    sem_destroy(&m_semaphore);
+}
+void Semaphore::wait() // --
+{
+
+    if(sem_wait(&m_semaphore))//直接拿信号量 trywait不会造成阻塞
+    {
+        throw std::logic_error("sem_wait error");
+    }
+    //if(errno != EINTR)
+    
+}
+void Semaphore::notify() // ++ post 信号量 唤醒wait的
+{
+    if(sem_post(&m_semaphore))
+    {
+        throw std::logic_error("sem_post error");
+    }
+}
+
+
 Thread* Thread::GetThis()
 {
     return t_thread;
@@ -29,7 +60,7 @@ void Thread::SetName(const std::string& name)
     t_thread_name = name;
 }
 
-Thread::Thread(std::function<void()> cb, const std::string& name)
+Thread::Thread(std::function<void()> cb, const std::string& name) //入参是返回值类型为void的不带参数的函数指针???
     :m_cb(cb)
     ,m_name(name)
 {
@@ -48,6 +79,8 @@ Thread::Thread(std::function<void()> cb, const std::string& name)
             << rt << "name = " << name;
             throw std::logic_error("pthread_create error");
     }
+
+    m_semaphore.wait();//等初始化
 }
 
 Thread::~Thread()
@@ -77,13 +110,14 @@ void* Thread::run(void* arg)//线程run的函数
 {
     Thread* thread = (Thread*) arg;
     t_thread = thread;
-    thread->m_id = chord::GetThreadId(); //拿到线程id
     t_thread_name = thread->m_name;
+    thread->m_id = chord::GetThreadId(); //拿到线程id
     //获取当前线程id 并命名
     pthread_setname_np(pthread_self(), thread->m_name.substr(0, 15).c_str());//给线程命名 最大16个字符数
 
     std::function<void()> cb;
     cb.swap(thread->m_cb);
+    thread->m_semaphore.notify();
     cb();
     return 0;
 
