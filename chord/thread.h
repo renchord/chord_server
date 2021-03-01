@@ -8,6 +8,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <stdint.h>
+#include <atomic>
 
 //befroe c11
 //  pthreaad_xxx
@@ -219,6 +220,60 @@ private:
     Semaphore operator=(const Semaphore&) = delete;
 private:
     sem_t m_semaphore;
+};
+
+
+class Spinlock {//自旋锁
+public:
+    typedef ScopedLockImpl<Spinlock> Lock;
+    Spinlock() 
+    {
+        pthread_spin_init(&m_mutex, 0);
+    }
+
+    ~Spinlock()
+    {
+        pthread_spin_destroy(&m_mutex);
+    }
+
+    void lock()
+    {
+        pthread_spin_lock(&m_mutex);
+    }
+
+    void unlock()
+    {
+        pthread_spin_unlock(&m_mutex);
+    }
+private:
+    pthread_spinlock_t m_mutex;
+};
+
+class CASLock { //原子锁
+public:
+    typedef ScopedLockImpl<CASLock> Lock;
+    CASLock()
+    {
+        m_mutex.clear();
+    }
+    ~CASLock()
+    {
+
+    }
+    void lock()
+    {
+        while(std::atomic_flag_test_and_set_explicit(&m_mutex, std::memory_order_acquire))
+        {
+            //尝试...
+        }
+    }
+    void unlock()
+    {
+        std::atomic_flag_clear_explicit(&m_mutex, std::memory_order_release);
+    }
+private:
+    
+    volatile std::atomic_flag m_mutex;
 };
  
 class Thread { //singleton

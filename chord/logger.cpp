@@ -395,8 +395,17 @@ void FileLogAppender::log(std::shared_ptr<Logger> logger, LogLevel::Level level,
 {
     if(level >= m_level)
     {
+        uint64_t now = time(0);
+        if(now != m_lastTime + 3)
+        {
+            reopen();
+            m_lastTime = now;
+        }
         MutexType::Lock lock(m_mutex);
-        m_filestream << m_formatter->format(logger, level, event);
+        if(!(m_filestream << m_formatter->format(logger, level, event)))
+        {
+            std::cout << "file_appender log error" << std::endl;
+        }
     }
 }
 

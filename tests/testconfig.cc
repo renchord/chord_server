@@ -150,9 +150,6 @@ public:
     }
 };
 
-
-
-
 template<>//偏特化 Person
 class LexicalCast <Person, std::string> {
 public:
@@ -170,12 +167,8 @@ public:
 
 }
 
-
-
 chord::ConfigVar<Person>::ptr g_person = chord::Config::Lookup("class.person", Person(), "system person");
-
 chord::ConfigVar<std::map<std::string, Person>>::ptr g_person_map = chord::Config::Lookup("class.map", std::map<std::string, Person>(), "system person");
-
 
 void test_calss(){
     CHORD_LOG_INFO(CHORD_LOG_ROOT()) << "before:" << g_person->getValue().toString() << " - " << g_person->toString();
