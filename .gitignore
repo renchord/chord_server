@@ -28,6 +28,7 @@ Makefile.in
 missing
 stamp-h1
 *.pc
+*.txt
 depcomp
 *.xcodeproj
 CMakeFiles
