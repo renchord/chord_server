@@ -46,6 +46,11 @@ force_redefine_file_macro_for_sources(test_config) #__FILE__
 add_dependencies(test_thread chord)
 target_link_libraries(test_thread ${LIBS})
 
+add_executable(test_util tests/test_util.cc)
+force_redefine_file_macro_for_sources(test_util) #__FILE__
+add_dependencies(test_util chord)
+target_link_libraries(test_util ${LIBS})
+
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
