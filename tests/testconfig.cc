@@ -183,7 +183,7 @@ void test_calss(){
     CHORD_LOG_INFO(CHORD_LOG_ROOT()) << prefix <<": size = " << m.size();\
 } 
 
-    g_person->addListener(10, [](const Person& old_value, const Person& new_value){
+    g_person->addListener([](const Person& old_value, const Person& new_value){
         CHORD_LOG_INFO(CHORD_LOG_ROOT()) << "old_value = " << old_value.toString() << " - " <<
         "new_value = " << new_value.toString();
     });
@@ -216,6 +216,15 @@ void test_log()
 
     system_log->setFormatter("%d - %m%n");
      CHORD_LOG_INFO(system_log) << "hello system" << std::endl;
+
+    chord::Config::Visit([](chord::ConfigVarBase::ptr var)
+    {
+        CHORD_LOG_INFO(CHORD_LOG_ROOT()) << "name= " << var->getName()
+                                << "description= " << var->getDescription()
+                                << "typename= " << var->getTypeName()
+                                << "value= " << var->toString()
+                                << std::endl;
+    });
 }
 
 int main(int argc, char** argv)

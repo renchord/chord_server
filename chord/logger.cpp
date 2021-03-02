@@ -814,7 +814,7 @@ chord::ConfigVar<std::set<LogDefine>>::ptr g_log_defines =
 //注册事件
 struct LogIniter {
     LogIniter() {
-        g_log_defines->addListener(0xF1E231, [](const std::set<LogDefine>& old_value, const std::set<LogDefine>& new_value) 
+        g_log_defines->addListener([](const std::set<LogDefine>& old_value, const std::set<LogDefine>& new_value) 
         {
 
             CHORD_LOG_INFO(CHORD_LOG_ROOT()) << "on_logger_conf_changed";

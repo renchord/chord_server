@@ -63,7 +63,18 @@ void Config::LoadFromYaml(const YAML::Node& root){
 
 ConfigVarBase::ptr Config::LookupBase(const std::string& name)
 {
+    RWMutexType::ReadLock lock(GetMutex()); //add read lock
     auto it = GetDatas().find(name);
     return it == GetDatas().end() ? nullptr : it->second;
+}
+
+void Config::Visit(std::function<void(ConfigVarBase::ptr)> cb) //外部一个方法去遍历所有的成员，即所有的ConfigVarBase对象
+{
+    RWMutexType::ReadLock lock(GetMutex()); //add read lock
+    ConfigVarMap& m = GetDatas();
+    for(auto it = m.begin(); it != m.end(); ++it)
+    {
+        cb(it->second);
+    }
 }
 }

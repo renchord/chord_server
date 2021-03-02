@@ -48,12 +48,12 @@ int main()
     YAML::Node root = YAML::LoadFile("/home/chord/workspace/chord_server/bin/conf/log2.yml"); //Load了Yaml文件的全集
     chord::Config::LoadFromYaml(root);
     std::vector<chord::Thread::ptr> thrs;
-    for(int i = 0; i < 2; ++i)
+    for(int i = 0; i < 1; ++i)
     {   
         chord::Thread::ptr thr1(new chord::Thread(&fun2, "name_" + std::to_string(i * 2)));
-        chord::Thread::ptr thr2(new chord::Thread(&fun3, "name_" + std::to_string(i * 2 + 1)));
+        //chord::Thread::ptr thr2(new chord::Thread(&fun3, "name_" + std::to_string(i * 2 + 1)));
         thrs.emplace_back(thr1);
-        thrs.emplace_back(thr2);
+        //thrs.emplace_back(thr2);
     }
 
     //sleep(20);
@@ -64,5 +64,6 @@ int main()
 
     CHORD_LOG_INFO(g_logger) << "thread test end";
     CHORD_LOG_INFO(g_logger) << "count=" << count;
+
     return 0;
 }

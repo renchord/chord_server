@@ -1,4 +1,2 @@
-2021-02-28 20:28:15	[INFO]	hello system
-
-2021-02-28 20:28:15	[INFO]	hello system
+2021-03-02 23:28:19	[INFO]	hello system
 
