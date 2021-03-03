@@ -9,7 +9,7 @@
     if(!(x)) { \
         CHORD_LOG_ERROR(CHORD_LOG_ROOT()) << "ASSERTION: " << #x \
             << "\nbacktrace:\n" \
-            << chord::BacktraceToString(10, 2, "    "); \
+            << chord::BacktraceToString(20, 2, "    "); \
         assert(x); \
     }
 
@@ -18,7 +18,7 @@
         CHORD_LOG_ERROR(CHORD_LOG_ROOT()) << "ASSERTION: " << #x \
             << "\n" << w \
             << "\nbacktrace:\n" \
-            << chord::BacktraceToString(10, 2, "    "); \
+            << chord::BacktraceToString(20, 2, "    "); \
         assert(x); \
     }
 
