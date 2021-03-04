@@ -6,4 +6,5 @@
 #include "thread.h"
 #include "singleton.h"
 #include "marco.h"
+#include "fiber.h"
 #endif

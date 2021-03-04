@@ -2,6 +2,7 @@
 #include "log.h"
 #include "config.h"
 #include "util.h"
+#include "fiber.h"
 
 namespace chord
 {
@@ -15,7 +16,7 @@ pid_t GetThreadId()
 
 u_int32_t GetFiberId()
 {
-    return 0;
+    return chord::Fiber::GetFiberId();
 }
 
 

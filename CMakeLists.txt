@@ -18,6 +18,7 @@ set(LIB_SRC
 	chord/logger.cpp
 	chord/util.cpp
 	chord/config.cpp
+	chord/fiber.cpp
 	chord/thread.cpp
 	)
 	
@@ -50,6 +51,11 @@ add_executable(test_util tests/test_util.cc)
 force_redefine_file_macro_for_sources(test_util) #__FILE__
 add_dependencies(test_util chord)
 target_link_libraries(test_util ${LIBS})
+
+add_executable(test_fiber tests/test_fiber.cc)
+force_redefine_file_macro_for_sources(test_fiber) #__FILE__
+add_dependencies(test_fiber chord)
+target_link_libraries(test_fiber ${LIBS})
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
